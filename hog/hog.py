@@ -82,7 +82,9 @@ def select_dice(score, opponent_score):
     multiple of 7, in which case select four-sided dice (Hog wild).
     """
     # BEGIN Question 3
-    "*** REPLACE THIS LINE ***"
+    if (score + opponent_score) % 7 == 0:
+        return four_sided
+    return six_sided
     # END Question 3
 
 
