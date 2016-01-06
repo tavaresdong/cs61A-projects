@@ -202,7 +202,13 @@ def make_averaged(fn, num_samples=1000):
     not apply.
     """
     # BEGIN Question 6
-    "*** REPLACE THIS LINE ***"
+    def averaged_fn(*args):
+        score, rd = 0, 0
+        while  rd < num_samples:
+           score, rd = score + fn(*args), rd + 1
+        return score / num_samples
+    return averaged_fn
+
     # END Question 6
 
 
