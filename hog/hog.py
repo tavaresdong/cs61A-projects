@@ -90,10 +90,16 @@ def select_dice(score, opponent_score):
 
 def is_swap(score0, score1):
     """Returns whether the last two digits of SCORE0 and SCORE1 are reversed
-    versions of each other, such as 19 and 91.
+    versions of each other, such as 19 and 91 and 2 and 20
     """
     # BEGIN Question 4
-    "*** REPLACE THIS LINE ***"
+    last0, last1 = score0 % 100, score1 % 100
+    if last0 < last1:
+        return is_swap(last1, last0)
+    rev = 0
+    while last0 != 0:
+       rev, last0 = rev * 10 + last0 % 10, last0 // 10
+    return rev == last1
     # END Question 4
 
 
