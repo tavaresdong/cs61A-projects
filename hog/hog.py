@@ -129,7 +129,28 @@ def play(strategy0, strategy1, score0=0, score1=0, goal=GOAL_SCORE):
     """
     who = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN Question 5
-    "*** REPLACE THIS LINE ***"
+    game_end = False
+    while not game_end:
+        if score0 < goal and score1 < goal:
+            num_roll, curscore, opposcore = 0, 0, 0
+            if who == 0:
+                num_roll, curscore, opposcore = strategy0(score0, score1), score0, score1
+            elif who == 1:
+                num_roll, curscore, opposcore = strategy1(score1, score0), score1, score0
+            score_add = take_turn(num_roll, opposcore, select_dice(curscore, opposcore))
+            # PiggyBack:
+            if score_add == 0:
+               opposcore += num_roll
+            curscore = curscore + score_add
+            if is_swap(curscore, opposcore):
+                curscore, opposcore = opposcore, curscore 
+            if who == 0:
+                score0, score1 = curscore, opposcore
+            else:
+                score1, score0 = curscore, opposcore
+            who = other(who)
+        else:
+            game_end = True
     # END Question 5
     return score0, score1
 
