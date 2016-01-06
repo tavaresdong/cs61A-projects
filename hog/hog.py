@@ -2,6 +2,7 @@
 
 from dice import four_sided, six_sided, make_test_dice
 from ucb import main, trace, log_current_line, interact
+from math import sqrt
 
 GOAL_SCORE = 100  # The goal of Hog is to score 100 points.
 
@@ -30,6 +31,23 @@ def roll_dice(num_rolls, dice=six_sided):
     return score
     # END Question 1
 
+def is_prime(val):
+    if val <= 1:
+        return False
+    else:
+        div = 2
+        while div * div <= val:
+            if val % div == 0:
+                return False
+            div = div + 1
+    return True
+
+def next_prime(val):
+    val = val + 2
+    while not is_prime(val):
+        val = val + 2
+    return val
+
 
 def take_turn(num_rolls, opponent_score, dice=six_sided):
     """Simulate a turn rolling NUM_ROLLS dice, which may be 0 (Free bacon).
@@ -43,7 +61,19 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN Question 2
-    "*** REPLACE THIS LINE ***"
+    dice_score = 1
+    if num_rolls == 0:
+        while opponent_score != 0:
+            digit, opponent_score = opponent_score % 10, opponent_score // 10
+            if digit + 1 > dice_score:
+                dice_score = digit + 1
+    else:
+        dice_score = roll_dice(num_rolls, dice)
+
+    # Hogtimus Prime: if the score is a prime number, boost to the next prime
+    if is_prime(dice_score):
+        dice_score = next_prime(dice_score)
+    return dice_score
     # END Question 2
 
 
