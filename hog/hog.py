@@ -279,8 +279,13 @@ def bacon_strategy(score, opponent_score, margin=8, num_rolls=5):
     and rolls NUM_ROLLS otherwise.
     """
     # BEGIN Question 8
-    "*** REPLACE THIS LINE ***"
-    return 5  # Replace this statement
+    while opponent_score != 0:
+        score_gain, opponent_score = opponent_score % 10 + 1, opponent_score // 10
+        if is_prime(score_gain):
+            score_gain = next_prime(score_gain)
+        if score_gain >= margin:
+            return 0
+    return num_rolls  # Replace this statement
     # END Question 8
 
 
