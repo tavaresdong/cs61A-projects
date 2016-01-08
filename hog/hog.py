@@ -132,28 +132,24 @@ def play(strategy0, strategy1, score0=0, score1=0, goal=GOAL_SCORE):
     """
     who = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN Question 5
-    game_end = False
-    while not game_end:
-        if score0 < goal and score1 < goal:
-            num_roll, curscore, opposcore = 0, 0, 0
-            if who == 0:
-                num_roll, curscore, opposcore = strategy0(score0, score1), score0, score1
-            elif who == 1:
-                num_roll, curscore, opposcore = strategy1(score1, score0), score1, score0
-            score_add = take_turn(num_roll, opposcore, select_dice(curscore, opposcore))
-            # PiggyBack:
-            if score_add == 0:
-               opposcore += num_roll
-            curscore = curscore + score_add
-            if is_swap(curscore, opposcore):
-                curscore, opposcore = opposcore, curscore 
-            if who == 0:
-                score0, score1 = curscore, opposcore
-            else:
-                score1, score0 = curscore, opposcore
-            who = other(who)
+    while score0 < goal and score1 < goal:
+        num_roll, curscore, opposcore = 0, 0, 0
+        if who == 0:
+            num_roll, curscore, opposcore = strategy0(score0, score1), score0, score1
         else:
-            game_end = True
+            num_roll, curscore, opposcore = strategy1(score1, score0), score1, score0
+        score_add = take_turn(num_roll, opposcore, select_dice(curscore, opposcore))
+        # PiggyBack:
+        if score_add == 0:
+           opposcore += num_roll
+        curscore = curscore + score_add
+        if is_swap(curscore, opposcore):
+            curscore, opposcore = opposcore, curscore 
+        if who == 0:
+            score0, score1 = curscore, opposcore
+        else:
+            score1, score0 = curscore, opposcore
+        who = other(who)
     # END Question 5
     return score0, score1
 
@@ -257,19 +253,19 @@ def average_win_rate(strategy, baseline=always_roll(5)):
 
 def run_experiments():
     """Run a series of strategy experiments and report results."""
-    if True:  # Change to False when done finding max_scoring_num_rolls
+    if False:  # Change to False when done finding max_scoring_num_rolls
         six_sided_max = max_scoring_num_rolls(six_sided)
         print('Max scoring num rolls for six-sided dice:', six_sided_max)
         four_sided_max = max_scoring_num_rolls(four_sided)
         print('Max scoring num rolls for four-sided dice:', four_sided_max)
 
-    if False:  # Change to True to test always_roll(8)
+    if True:  # Change to True to test always_roll(8)
         print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
 
-    if False:  # Change to True to test bacon_strategy
+    if True:  # Change to True to test bacon_strategy
         print('bacon_strategy win rate:', average_win_rate(bacon_strategy))
 
-    if False:  # Change to True to test swap_strategy
+    if True:  # Change to True to test swap_strategy
         print('swap_strategy win rate:', average_win_rate(swap_strategy))
 
     "*** You may add additional experiments as you wish ***"
@@ -293,12 +289,9 @@ def bacon_strategy(score, opponent_score, margin=8, num_rolls=5):
     and rolls NUM_ROLLS otherwise.
     """
     # BEGIN Question 8
-    while opponent_score != 0:
-        score_gain, opponent_score = opponent_score % 10 + 1, opponent_score // 10
-        if is_prime(score_gain):
-            score_gain = next_prime(score_gain)
-        if score_gain >= margin:
-            return 0
+    score_gain = zero_roll_gain(score, opponent_score)
+    if score_gain >= margin:
+        return 0
     return num_rolls
     # END Question 8
 
@@ -308,13 +301,7 @@ def swap_strategy(score, opponent_score, num_rolls=5):
     rolls NUM_ROLLS otherwise.
     """
     # BEGIN Question 9
-    add_score, oppo = 1, opponent_score
-    while oppo != 0:
-        score_gain, oppo = oppo % 10 + 1, oppo // 10
-        if score_gain > add_score:
-            add_score = score_gain
-    if is_prime(add_score):
-        add_score = next_prime(add_score)
+    add_score = zero_roll_gain(score, opponent_score)
     score += add_score
     if is_swap(score, opponent_score) and score < opponent_score:
         return 0
@@ -325,11 +312,40 @@ def swap_strategy(score, opponent_score, num_rolls=5):
 def final_strategy(score, opponent_score):
     """Write a brief description of your final strategy.
 
-    *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN Question 10
-    "*** REPLACE THIS LINE ***"
-    return 5  # Replace this statement
+    noroll_gain = zero_roll_gain(score, opponent_score)
+
+    # When scores are higher, try roll less dice, in case we roll a 1
+    margin, num_roll = 8, 6 
+
+    if score > 75:
+        margin, num_roll = 7, 5
+    elif score > 84:
+        margin, num_roll = 6, 3
+    elif score > 93:
+        margin, num_roll = 4, 2
+
+    if (score + opponent_score) % 7 == 0:
+        margin, num_roll = 4, 3
+
+    # If winning with 0 roll, then do it
+    if score + noroll_gain >= 100:
+        return 0
+
+    # Force opponent to roll 4-sided dice if lagged away over 15 points
+    if (score + noroll_gain + opponent_score) % 7 == 0 and (opponent_score - score >= 10):
+        return 0
+
+    # If swap is beneficial, do it
+    if is_swap(score + noroll_gain, opponent_score) and score < opponent_score:
+        return 0
+
+    # If margin is met, don't roll
+    if noroll_gain >= margin:
+        return 0
+
+    return num_roll
     # END Question 10
 
 
