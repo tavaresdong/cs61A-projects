@@ -48,7 +48,13 @@ def group_by_centroid(restaurants, centroids):
     restaurants closest to the same centroid.
     """
     # BEGIN Question 4
-    "*** REPLACE THIS LINE ***"
+    pairs = []
+    for rest in restaurants:
+        loc = restaurant_location(rest)
+        nearest_centroid = find_closest(loc, centroids)
+        pair = [nearest_centroid, rest]
+        pairs.append(pair)
+    return group_by_first(pairs)
     # END Question 4
 
 
