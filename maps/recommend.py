@@ -61,7 +61,9 @@ def group_by_centroid(restaurants, centroids):
 def find_centroid(cluster):
     """Return the centroid of the locations of the restaurants in cluster."""
     # BEGIN Question 5
-    "*** REPLACE THIS LINE ***"
+    xs = [restaurant_location(loc)[0] for loc in cluster]
+    ys = [restaurant_location(loc)[1] for loc in cluster]
+    return [mean(xs), mean(ys)]
     # END Question 5
 
 
