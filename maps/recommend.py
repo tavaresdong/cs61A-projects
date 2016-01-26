@@ -106,7 +106,13 @@ def find_predictor(user, restaurants, feature_fn):
 
     # BEGIN Question 7
     "*** REPLACE THIS LINE ***"
-    b, a, r_squared = 0, 0, 0  # REPLACE THIS LINE WITH YOUR SOLUTION
+    mean_xs = mean(xs)
+    mean_ys = mean(ys)
+    s_xx = sum([(x - mean_xs) * (x - mean_xs) for x in xs])
+    s_yy = sum([(y - mean_ys) * (y - mean_ys) for y in ys])
+    s_xy = sum([(x - mean_xs) * (y - mean_ys) for x, y in zip(xs, ys)])
+    b, a, r_squared = s_xy / s_xx, mean(ys) - (s_xy / s_xx) * mean(xs), s_xy * s_xy / (s_xx * s_yy)
+
     # END Question 7
 
     def predictor(restaurant):
