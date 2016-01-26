@@ -132,7 +132,10 @@ def best_predictor(user, restaurants, feature_fns):
     """
     reviewed = user_reviewed_restaurants(user, restaurants)
     # BEGIN Question 8
-    "*** REPLACE THIS LINE ***"
+    # Use max function with key and list generator and list converter
+    return max([list(find_predictor(user, reviewed, fn)) for fn\
+            in feature_fns], key = lambda p : p[1])[0]
+                        
     # END Question 8
 
 
