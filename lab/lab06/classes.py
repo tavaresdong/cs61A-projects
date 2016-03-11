@@ -188,6 +188,15 @@ class Player(object):
         27
         """
         "*** YOUR CODE HERE ***"
+        if not list_of_treasures:
+            return 0
+        cur = list_of_treasures[0]
+        value_without = Player.knapsack(self, max_weight, list_of_treasures[1:])
+        if max_weight >= cur.weight:
+            value_with = cur.value + Player.knapsack(self, max_weight - cur.weight, list_of_treasures[1:])
+            if value_with > value_without:
+                return value_with
+        return value_without
 
 class Character(object):
     def __init__(self, name, message):
