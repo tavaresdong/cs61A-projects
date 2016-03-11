@@ -162,7 +162,11 @@ class Player(object):
         for item in self.backpack:
             if type(item) == Key:
                 key = item
-        "*** YOUR CODE HERE ***"
+        destination_place = self.place.get_neighbor(place)
+        if not key:
+            print("{} can't be unlocked without a key!".format(place))
+        else:
+            key.use(destination_place)
 
     def knapsack(self, max_weight, list_of_treasures):
         """Return the total value of the most valuable combination of treasures
@@ -203,6 +207,14 @@ class Thing(object):
         print("You can't use a {0} here".format(self.name))
 
 """ Implement Key here! """
+class Key(Thing):
+    def use(self, place):
+        if place.locked:
+            place.locked = False
+            print(place.name, 'is now unlocked!')
+        else:
+            print(place.name, 'is already unlocked!')
+
 
 class Treasure(Thing):
     def __init__(self, name, description, value, weight):
