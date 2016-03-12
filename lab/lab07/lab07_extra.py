@@ -33,6 +33,10 @@ def list_to_link(lst):
     <1 2 3>
     """
     "*** YOUR CODE HERE ***"
+    if not lst:
+        return Link.empty
+    else:
+        return Link(lst[0], list_to_link(lst[1:]))
 
 
 # Q7
