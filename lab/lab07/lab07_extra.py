@@ -127,6 +127,7 @@ def has_cycle(link):
     """
     "*** YOUR CODE HERE ***"
 
+
 def has_cycle_constant(link):
     """Return whether link contains a cycle.
 
@@ -139,4 +140,12 @@ def has_cycle_constant(link):
     False
     """
     "*** YOUR CODE HERE ***"
+    fast, slow = link, link
+    while fast != Link.empty and slow != Link.empty:
+        slow, fast = slow.rest, fast.rest
+        if fast is Link.empty:
+            return False
+        fast = fast.rest
+        if fast is slow:
+            return True
 
