@@ -50,6 +50,13 @@ def link_to_list(link):
     []
     """
     "*** YOUR CODE HERE ***"
+    lst = []
+    if link is Link.empty:
+        return lst
+    else:
+        lst.append(link.first)
+        lst += link_to_list(link.rest)
+        return lst
 
 
 # Q8
@@ -66,6 +73,17 @@ def reverse(link):
     <1 2 3>
     """
     "*** YOUR CODE HERE ***"
+    if link is Link.empty:
+        return link.empty
+    elif link.rest is Link.empty:
+        return Link(link.first)
+    else:
+        rev = reverse(link.rest)
+        ls = rev
+        while ls.rest != Link.empty:
+            ls = ls.rest
+        ls.rest = Link(link.first)
+        return rev
 
 
 # Q9
