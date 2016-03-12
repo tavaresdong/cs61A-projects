@@ -101,6 +101,13 @@ def deep_map(f, link):
     <<2 <4 6> 8> <<10>>>
     """
     "*** YOUR CODE HERE ***"
+    if link is Link.empty:
+        return Link.empty
+    elif isinstance(link.first, Link):
+        return Link(deep_map(f, link.first), deep_map(f, link.rest))
+    else:
+        return Link(f(link.first), deep_map(f, link.rest))
+        
 
 
 # Q10
