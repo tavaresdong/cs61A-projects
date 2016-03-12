@@ -46,6 +46,13 @@ def same_shape(t1, t2):
     False
     """
     "*** YOUR CODE HERE ***"
+    if len(t1.branches) != len(t2.branches):
+        return False
+    else:
+        for (subt1, subt2) in zip(t1.branches, t2.branches):
+            if not same_shape(subt1, subt2):
+                return False
+        return True
 
 
 # Linked List Class
