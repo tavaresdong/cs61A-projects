@@ -15,6 +15,13 @@ def cumulative_sum(t):
     Tree(1)
     """
     "*** YOUR CODE HERE ***"
+    assert isinstance(t, Tree)
+    node_sum = t.entry
+    sum_branches = tuple(cumulative_sum(sub) for sub in t.branches)
+    for sub in sum_branches:
+        node_sum += sub.entry
+    return Tree(node_sum, sum_branches)
+
 
 
 # Q6
