@@ -97,6 +97,15 @@ def mutate_reverse(link):
     Link(3, Link(2, Link(1)))
     """
     "*** YOUR CODE HERE ***"
+    affl = Link.empty
+    cur = link
+    while not (cur is Link.empty):
+        affl = Link(cur.first, affl)
+        cur = cur.rest
+    while not (link is Link.empty):
+        link.first = affl.first
+        link, affl = link.rest, affl.rest
+
 
 
 def long_paths(tree, n):
