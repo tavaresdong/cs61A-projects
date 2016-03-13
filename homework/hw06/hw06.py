@@ -82,6 +82,12 @@ def every_other(s):
             flag = 0
 
 
+def clone_reverse(link):
+    clone = Link.empty
+    while not (link is Link.empty):
+        clone = Link(link.first, clone)
+        link = link.rest
+    return clone
 
 def mutate_reverse(link):
     """Mutates the Link so that its elements are reversed.
@@ -137,6 +143,19 @@ def long_paths(tree, n):
     []
     """
     "*** YOUR CODE HERE ***"
+    def find_path(tree, link, length, result):
+        cur_link = Link(tree.entry, link)
+        if tree.is_leaf() and length >= n:
+            result.append(cur_link)
+        for branch in tree.branches:
+            find_path(branch, cur_link, length + 1, result)
+
+    search, result  = [], []
+    find_path(tree, Link.empty, 0, search)
+    for lst in search:
+        result.append(clone_reverse(lst))
+    return result
+
 
 def partial_tree(s, n):
     """Return a balanced tree of the first n elements of Link s, along with
