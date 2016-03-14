@@ -190,12 +190,9 @@ def partial_tree(s, n):
         left_size = (n-1)//2
         right_size = n - left_size - 1
         "*** YOUR CODE HERE ***"
-        rt, pos = s, 0
-        while pos < left_size:
-            rt, pos = rt.rest, pos + 1
         ltree, lrest = partial_tree(s, left_size)
-        rtree, rrest = partial_tree(rt.rest, right_size)
-        return (Tree(rt.first, (ltree, rtree)), rrest)
+        rtree, rrest = partial_tree(lrest.rest, right_size)
+        return (Tree(lrest.first, (ltree, rtree)), rrest)
 
 def sequence_to_tree(s):
     """Return a balanced tree containing the elements of sorted Link s.
