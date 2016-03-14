@@ -132,10 +132,18 @@ def trade(first, second):
     [4, 3, 1, 4, 1]
     """
     m, n = 1, 1
-
+    
     "*** YOUR CODE HERE ***"
+    if not first or not second:
+        return 'No deal!'
+    suma, sumb = first[0], second[0]
+    while suma != sumb and m < len(first) and n < len(second):
+        if suma < sumb:
+            suma, m = suma + first[m], m + 1
+        else:
+            sumb, n = sumb + second[n], n + 1
 
-    if False: # change this line!
+    if suma == sumb: # change this line!
         first[:m], second[:n] = second[:n], first[:m]
         return 'Deal!'
     else:
