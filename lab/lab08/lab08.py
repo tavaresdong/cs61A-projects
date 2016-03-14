@@ -55,8 +55,6 @@ def make_advanced_counter_maker():
                 
 
 
-
-# Q4
 def intersection(xs, ys):
     """
     >>> a = Link(1)
@@ -86,6 +84,23 @@ def intersection(xs, ys):
     5
     """
     "*** YOUR CODE HERE ***"
+    lenx, leny = 0, 0
+    hx, hy = xs, ys
+    while not (hx is Link.empty):
+        hx, lenx = hx.rest, lenx + 1
+    while not (hy is Link.empty):
+        hy, leny = hy.rest, leny + 1
+    hx, hy = xs, ys
+    while lenx > leny:
+        hx, lenx = hx.rest, lenx - 1
+    while leny > lenx:
+        hy, leny = hy.rest, leny - 1
+    while lenx > 0 and not (hx is hy):
+        lenx = lenx - 1
+        hx, hy = hx.rest, hy.rest
+    return hx
+
+
 
 
 # Q5
