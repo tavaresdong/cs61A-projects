@@ -31,8 +31,15 @@
 
 
 (define (ordered? s)
-  'YOUR-CODE-HERE
-  nil
+  (cond
+      ((null? s) true)
+      ((null? (cdr s)) true)
+      (else (and 
+              (ordered? (cdr s)) 
+              (<= (car s) (cadr s))
+            )
+      )
+  )
 )
 
 
