@@ -113,8 +113,10 @@
 (define (union s t)
     (cond ((empty? s) t)
           ((empty? t) s)
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
+          ((= (car s) (car t)) (cons (car s) (union (cdr s) (cdr t))))
+          ((< (car s) (car t)) (cons (car s) (union (cdr s) t)))
+          (else (cons (car t) (union s (cdr t))))
+    )
+)
 
 
