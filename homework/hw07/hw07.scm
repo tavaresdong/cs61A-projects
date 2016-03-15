@@ -44,8 +44,12 @@
 
 
 (define (nodots s)
-  'YOUR-CODE-HERE
-  nil
+  (cond
+      ((null? s) s)
+      ((number? s) (list s))
+      ((number? (car s)) (cons (car s) (nodots (cdr s))))
+      ((pair? (car s)) (cons (nodots (car s)) (nodots (cdr s))))
+  )
 )
 
 
