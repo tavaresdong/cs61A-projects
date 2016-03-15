@@ -90,9 +90,11 @@
 
 (define (intersect s t)
     (cond ((or (empty? s) (empty? t)) nil)
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
+          ((= (car s) (car t)) (cons (car s) (intersect (cdr s) (cdr t))))
+          ((< (car s) (car t)) (intersect (cdr s) t))
+          (else (intersect s (cdr t)))
+    )
+)
 
 ; Equivalent Python code, for your reference:
 ;
