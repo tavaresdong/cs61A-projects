@@ -21,9 +21,13 @@
 (define (square x) (* x x))
 
 (define (pow b n)
-  'YOUR-CODE-HERE
-  nil
+  (cond
+      ((<= n 0) 1)
+      ((even? n) (square (pow b (quotient n 2))))
+      (else (* b (square (pow b (quotient (- n 1) 2)))))
+  ) 
 )
+
 
 
 (define (ordered? s)
