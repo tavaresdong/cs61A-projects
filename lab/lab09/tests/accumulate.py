@@ -7,11 +7,10 @@ test = {
         {
           'code': r"""
           scm> (accumulate + 0 4 square)
-          8a1df3cf221256374ccf6cefb730a46e
-          # locked
+          30
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,
@@ -27,11 +26,10 @@ test = {
         {
           'code': r"""
           scm> (accumulate * 3 3 identity)
-          130586a2ba9e2882c4a61e11881a9612
-          # locked
+          18
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,
@@ -47,11 +45,10 @@ test = {
         {
           'code': r"""
           scm> (accumulate + 1 5 add-one)
-          7d0935e9b0eb4047d5cea4f7a2d102b7
-          # locked
+          21
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,
