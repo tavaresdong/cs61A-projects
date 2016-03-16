@@ -19,7 +19,15 @@
 
 ; Q10
 (define (num-leaves tree)
-  'YOUR-CODE-HERE
+  (if (null? tree)
+      0
+      (if (and (null? (left tree)) (null? (right tree)))
+          1
+          (+ (num-leaves (left tree))
+             (num-leaves (right tree))
+          )
+      )
+  )
 )
 
 ; Q11
