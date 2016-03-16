@@ -51,7 +51,13 @@
 
 ; Q6
 (define (filter f lst)
-  'YOUR-CODE-HERE
+  (if (null? lst)
+      lst
+      (if (f (car lst))
+          (cons (car lst) (filter f (cdr lst)))
+          (filter f (cdr lst))
+      ) 
+  )
 )
 
 
