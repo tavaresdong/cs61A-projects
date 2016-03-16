@@ -20,7 +20,11 @@
 
 ; Q4
 (define lst
-  'YOUR-CODE-HERE
+  (cons (list 1)
+        (cons 2
+              (cons (cons 3 4) (list 5))
+        )
+  )
 )
   
 
