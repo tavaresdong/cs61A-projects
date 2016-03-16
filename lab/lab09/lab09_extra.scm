@@ -4,7 +4,16 @@
 (define (max a b) (if (> a b) a b))
 (define (min a b) (if (> a b) b a))
 (define (gcd a b)
-  'YOUR-CODE-HERE
+  (if (< a b)
+      (gcd b a)
+      (if (= 0 b)
+          a 
+          (if (= 0 (modulo a b))
+              b
+              (gcd b (modulo a b))
+          )
+      )
+  )
 )
 
 
