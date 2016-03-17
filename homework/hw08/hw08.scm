@@ -1,5 +1,14 @@
 (define (substitute s old new)
-  'YOUR-CODE-HERE
+  (if (null? s)
+      ()
+      (if (list? (car s)) 
+          (cons (substitute (car s) old new) (substitute (cdr s) old new))
+          (if (equal? (car s) old)
+              (cons new (substitute (cdr s) old new))
+              (cons (car s) (substitute (cdr s) old new))
+          )
+      )
+  )
 )
 
 
