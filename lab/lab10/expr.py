@@ -108,7 +108,9 @@ class Name(Expr):
         Exception raised!
         """
         "*** YOUR CODE HERE ***"
-        pass # REPLACE THIS LINE
+        if self.string in env:
+            return env[self.string]
+        raise NameError('No name {} is found'.format(self.string))
 
     def __str__(self):
         return self.string
