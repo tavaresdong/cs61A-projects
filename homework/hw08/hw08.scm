@@ -13,7 +13,10 @@
 
 
 (define (sub-all s olds news)
-  'YOUR-CODE-HERE
+  (if (null? olds) 
+      s
+      (sub-all (substitute s (car olds) (car news)) (cdr olds) (cdr news))
+  )
 )
 
 
