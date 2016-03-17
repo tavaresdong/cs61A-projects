@@ -177,7 +177,9 @@ class CallExpr(Expr):
         Number(14)
         """
         "*** YOUR CODE HERE ***"
-        pass # REPLACE THIS LINE
+        func = self.operator.eval(env)
+        args = [op.eval(env) for op in self.operands]
+        return func.apply(args)
 
     def __str__(self):
         function = str(self.operator)
