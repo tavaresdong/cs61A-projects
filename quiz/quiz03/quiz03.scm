@@ -39,10 +39,17 @@
 (define (legal hand highest)
   (define least (min hand))
   (define (result hand)
-    (if (null? hand) nil (begin
+    (if (null? hand) 
+        nil
+        (begin
         (define card (car hand))
-        'YOUR-CODE-HERE
-        )))
+        (if (or (= card least) (>= card highest))
+            (cons (cons card (>= card highest)) (result (cdr hand)))
+            (result (cdr hand))
+        )
+        )
+    )
+  )
   (result hand))
 
 

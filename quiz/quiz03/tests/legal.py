@@ -7,11 +7,10 @@ test = {
         {
           'code': r"""
           scm> (legal '(3 7) 5)
-          fe0d386b7c8a9c8c0bae1111d11e5df1
-          # locked
+          ((3 . False) (7 . True))
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
