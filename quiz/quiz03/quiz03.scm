@@ -29,7 +29,9 @@
 
 ; Fimp returns the card played under the fimping strategy in Cucumber.
 (define (fimp hand highest)
-    'YOUR-CODE-HERE
+  (cond ((all (lambda (x) (> highest x)) hand) (min hand))
+        (else (min (filter (lambda (x) (>= x highest)) hand)))
+  )
 )
 
 
