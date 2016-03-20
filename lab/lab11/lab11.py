@@ -91,6 +91,9 @@ def countdown(n):
     0
     """
     "*** YOUR CODE HERE ***"
+    while n >= 0:
+        yield n
+        n -= 1
 
 class Countdown:
     """
@@ -108,6 +111,14 @@ class Countdown:
     0
     """
     "*** YOUR CODE HERE ***"
+    def __init__(self, n):
+        self.n = n
+
+    # yield makes this method a generator function
+    def __iter__(self):
+        while self.n >= 0:
+            yield self.n
+            self.n -= 1
 
 # Q5
 def hailstone(n):
