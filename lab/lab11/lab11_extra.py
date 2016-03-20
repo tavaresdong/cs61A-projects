@@ -15,6 +15,8 @@ def scale(s, k):
     [2, 4, 6, 8, 10]
     """
     "*** YOUR CODE HERE ***"
+    for orig in s:
+        yield orig * k
 
 
 # Q7
@@ -34,6 +36,7 @@ def merge(s0, s1):
     i0, i1 = iter(s0), iter(s1)
     e0, e1 = next(i0), next(i1)
     "*** YOUR CODE HERE ***"
+
 
 
 
