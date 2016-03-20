@@ -72,6 +72,11 @@ def remainders_generator(m):
     11
     """
     "*** YOUR CODE HERE ***"
+    def rem_gen(n):
+        while True:
+            yield n
+            n += m
+    return [rem_gen(i) for i in range(m)]
 
 
 # the naturals generator is used for testing scale and merge functions
