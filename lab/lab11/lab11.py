@@ -24,13 +24,21 @@ class IteratorRestart:
     7
     """
     def __init__(self, start, end):
-        "*** YOUR CODE HERE ***"
+        self.val = start
+        self.start = start
+        self.end = end
 
     def __next__(self):
-        "*** YOUR CODE HERE ***"
+        if self.val <= self.end:
+            orig = self.val
+            self.val += 1
+            return orig
+        else:
+            self.val = self.start
+            raise StopIteration
 
     def __iter__(self):
-        "*** YOUR CODE HERE ***"
+        return self
 
 
 # Q3
