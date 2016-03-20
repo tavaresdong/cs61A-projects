@@ -56,8 +56,19 @@ class Str:
     >>> for char in s:    # a standard iterator does not restart
     ...     print(char)
     """
-    "*** YOUR CODE HERE ***"
+    def __init__(self, string):
+        self.string = string
+        self.pos = -1
 
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.pos < len(self.string) - 1:
+            self.pos += 1
+            return self.string[self.pos]
+        else:
+            raise StopIteration
 
 ##############
 # Generators #
