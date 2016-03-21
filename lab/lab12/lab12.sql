@@ -22,7 +22,6 @@ CREATE TABLE sevens as
 
 -- Q6
 CREATE TABLE matchmaker as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT a.pet, a.song, a.color, b.color FROM students as a, students as b WHERE a.time < b.time AND a.pet = b.pet AND a.song = b.song;
 
 
