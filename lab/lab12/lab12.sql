@@ -17,8 +17,7 @@ CREATE TABLE smallest_int as
 
 -- Q5
 CREATE TABLE sevens as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT students.seven FROM students, checkboxes WHERE students.time = checkboxes.time AND students.number = 7 AND checkboxes.'7' = 'True';
 
 
 -- Q6
