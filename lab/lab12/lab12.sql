@@ -9,7 +9,7 @@ CREATE TABLE obedience as
 -- Q3
 CREATE TABLE blue_dog as
   -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT color, pet FROM students WHERE color = 'blue' and pet = 'dog';
 
 
 -- Q4
