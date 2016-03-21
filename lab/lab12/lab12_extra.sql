@@ -2,6 +2,5 @@
 
 -- Q7
 CREATE TABLE smallest_int_count as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT smallest, COUNT(*) FROM students WHERE smallest >= 1 GROUP BY smallest ORDER BY smallest;
 
