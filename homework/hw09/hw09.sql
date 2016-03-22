@@ -39,7 +39,7 @@ select p.child FROM parents as p, dogs as d WHERE p.parent = d.name ORDER BY d.h
 
 -- Sentences about siblings that are the same size
 create table sentences as
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
+select d1.name || " and " || d2.name || " are " || s.size || " siblings" FROM parents as p1, parents as p2, dogs as d1, dogs as d2, sizes as s WHERE p1.parent = p2.parent AND p1.child < p2.child AND p1.child = d1.name AND p2.child = d2.name AND d1.height > s.min AND d1.height <= s.max AND d2.height > s.min AND d2.height <= s.max;
 
 
 -- Ways to stack 4 dogs to a height of at least 170, ordered by total height
