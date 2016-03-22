@@ -38,8 +38,7 @@ CREATE TABLE number_of_options as
 
 -- Q5
 CREATE TABLE calories as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT count(*) FROM main_course as m, pies as p WHERE m.calories + p.calories < 2500;
 
 
 -- Q6
