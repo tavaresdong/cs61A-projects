@@ -34,7 +34,7 @@ select d.name, s.size FROM dogs as d, sizes as s WHERE d.height > s.min AND d.he
 
 -- All dogs with parents ordered by decreasing height of their parent
 create table by_height as
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
+select p.child FROM parents as p, dogs as d WHERE p.parent = d.name ORDER BY d.height DESC;
 
 
 -- Sentences about siblings that are the same size
