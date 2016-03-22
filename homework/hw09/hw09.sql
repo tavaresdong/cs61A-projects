@@ -53,8 +53,14 @@ select fullname, total_ht FROM dog_stack WHERE total_ht > 170 ORDER BY total_ht;
 
 
 create table tallest as
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
-
+with
+  dog_info(tenth_height, ht, name) as (
+    select height / 10, height, name FROM dogs
+  ),
+  height_info(max_ht, cnt) as (
+    select MAX(ht), COUNT(*) FROM dog_info GROUP BY tenth_height
+  )
+select d.height, d.name FROM dogs as d, height_info as h WHERE d.height = h.max_ht AND h.cnt > 1;
 
 -- All non-parent relations ordered by height difference
 create table non_parents as
