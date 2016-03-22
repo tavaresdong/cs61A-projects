@@ -69,11 +69,10 @@ with
   best_prodname(prod) as (
     select p.name from best_prod as b, products as p WHERE p.MSRP / p.rating = b.performance and p.category = b.category
   )
-  SELECT b.prod, l.store FROM best_prodname as b, lowest_prices as l WHERE b.prod = l.prod ORDER BY b.prod;
+  SELECT b.prod as prod, l.store as store FROM best_prodname as b, lowest_prices as l WHERE b.prod = l.prod ORDER BY b.prod;
 
 
 -- Q10
 CREATE TABLE total_bandwidth as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT SUM(st.MiBs) FROM shopping_list as sl, stores as st WHERE sl.store = st.store  ;
 
