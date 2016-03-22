@@ -44,7 +44,12 @@ select d1.name || " and " || d2.name || " are " || s.size || " siblings" FROM pa
 
 -- Ways to stack 4 dogs to a height of at least 170, ordered by total height
 create table stacks as
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
+with
+  dog_stack(fullname, num, prev_ht, total_ht) as (
+    select name, 1, height, height from dogs union
+    select fullname || ", " || name, num + 1, height, total_ht + height FROM dog_stack, dogs WHERE prev_ht < height AND num < 4
+  )
+select fullname, total_ht FROM dog_stack WHERE total_ht > 170 ORDER BY total_ht; 
 
 
 create table tallest as
