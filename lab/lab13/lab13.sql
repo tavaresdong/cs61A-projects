@@ -53,14 +53,23 @@ CREATE TABLE average_prices as
 
 -- Q8
 CREATE TABLE lowest_prices as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+with
+  min_price(prod, price) as (
+    select item, MIN(price) from inventory group by item
+  )
+  SELECT i.item as prod, i.store as store, m.price as price FROM inventory as i, min_price as m WHERE i.item = m.prod AND i.price = m.price;
 
 
 -- Q9
 CREATE TABLE shopping_list as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+with
+  best_prod(category, performance) as (
+    select category, MIN(MSRP / rating) from products group by category
+  ),
+  best_prodname(prod) as (
+    select p.name from best_prod as b, products as p WHERE p.MSRP / p.rating = b.performance and p.category = b.category
+  )
+  SELECT b.prod, l.store FROM best_prodname as b, lowest_prices as l WHERE b.prod = l.prod ORDER BY b.prod;
 
 
 -- Q10
