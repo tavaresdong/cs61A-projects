@@ -23,14 +23,22 @@ with
 
 -- Q3
 CREATE TABLE shopping_cart as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+with
+  shopping_list(list, last_price, remain_price) as (
+    select item, price, 60 - price FROM supermarket WHERE price <= 60 union
+    select list || ", " || s.item, s.price, l.remain_price - s.price FROM shopping_list as l, supermarket as s WHERE l.last_price <= s.price AND s.price <= l.remain_price
+  )
+  SELECT list, remain_price FROM shopping_list ORDER BY remain_price, list;
 
 
 -- Q4
 CREATE TABLE number_of_options as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+with
+  shopping_list(list, last_price, remain_price) as (
+    select item, price, 60 - price FROM supermarket WHERE price <= 60 union
+    select list || ", " || s.item, s.price, l.remain_price - s.price FROM shopping_list as l, supermarket as s WHERE l.last_price <= s.price AND s.price <= l.remain_price
+  )
+  SELECT list, remain_price FROM shopping_list ORDER BY remain_price, list;
 
 
 -- Q5
