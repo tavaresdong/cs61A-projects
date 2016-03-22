@@ -2,8 +2,14 @@
 
 -- Q1
 CREATE TABLE flight_costs as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+with
+  cost(day, pp, p, cur) as (
+    select 1, 0, 0, 20 union
+    select 2, 0, 20, 30 union
+    select 3, 20, 30, 40 union
+    select day + 1, p, cur, (cur + p) / 2 + 5 * ((day + 1) % 7) FROM cost WHERE day >= 3 AND day < 25 
+  )
+  SELECT day, cur FROM cost ORDER BY day;
 
 -- Q2
 CREATE TABLE schedule as
