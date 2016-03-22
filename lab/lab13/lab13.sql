@@ -13,8 +13,12 @@ with
 
 -- Q2
 CREATE TABLE schedule as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+with
+  plan(route, relay, src, dest, cost) as (
+    select departure || ", " || arrival, 1, departure, arrival, price FROM flights union
+    select p.route || ", " || f.arrival, p.relay + 1, p.src, f.arrival, p.cost + f.price FROM plan as p, flights as f WHERE p.dest = f.departure and p.relay <= 1
+  )
+  SELECT route, cost FROM plan WHERE src = 'SFO' and dest = 'PDX' ORDER BY cost;
 
 
 -- Q3
