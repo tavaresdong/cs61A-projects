@@ -48,8 +48,7 @@ CREATE TABLE healthiest_meats as
 
 -- Q7
 CREATE TABLE average_prices as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT category, AVG(MSRP) FROM products GROUP BY category;
 
 
 -- Q8
