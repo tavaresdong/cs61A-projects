@@ -43,8 +43,7 @@ CREATE TABLE calories as
 
 -- Q6
 CREATE TABLE healthiest_meats as
-  -- REPLACE THIS LINE
-  SELECT 'YOUR CODE HERE';
+  SELECT m.meat, MIN(m.calories + p.calories) FROM main_course as m, pies as p GROUP BY m.meat HAVING MAX(m.calories + p.calories) < 3000;
 
 
 -- Q7
