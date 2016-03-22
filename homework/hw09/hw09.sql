@@ -64,6 +64,15 @@ select d.height, d.name FROM dogs as d, height_info as h WHERE d.height = h.max_
 
 -- All non-parent relations ordered by height difference
 create table non_parents as
-select "REPLACE THIS LINE WITH YOUR SOLUTION";
+with 
+  ancestor(one, two, generation) as (
+    select parent, child, 1  FROM parents union
+    select a.one, p.child, a.generation + 1 FROM ancestor as a, parents as p WHERE a.two = p.parent AND a.generation > 0
+  ),
+  no_parent(member1, member2, diff) as (
+    select a.one, a.two, d1.height - d2.height FROM ancestor as a, dogs as d1, dogs as d2 WHERE a.generation > 1 AND a.one = d1.name AND a.two = d2.name union
+    select a.two, a.one, d2.height - d1.height FROM ancestor as a, dogs as d1, dogs as d2 WHERE a.generation > 1 AND a.one = d1.name AND a.two = d2.name
+  )
+select member1, member2 FROM no_parent ORDER BY diff; 
 
 
