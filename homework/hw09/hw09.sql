@@ -29,21 +29,34 @@ create table sizes as
 
 -- The size of each dog
 create table size_of_dogs as
+<<<<<<< HEAD
 select "REPLACE THIS LINE WITH YOUR SOLUTION";
+=======
+select d.name, s.size FROM dogs as d, sizes as s WHERE d.height > s.min AND d.height <= s.max;
+>>>>>>> 0bd41e9f5ba00a463fca162841437259494e0da1
 
 
 -- All dogs with parents ordered by decreasing height of their parent
 create table by_height as
+<<<<<<< HEAD
 select "REPLACE THIS LINE WITH YOUR SOLUTION";
+=======
+select p.child FROM parents as p, dogs as d WHERE p.parent = d.name ORDER BY d.height DESC;
+>>>>>>> 0bd41e9f5ba00a463fca162841437259494e0da1
 
 
 -- Sentences about siblings that are the same size
 create table sentences as
+<<<<<<< HEAD
 select "REPLACE THIS LINE WITH YOUR SOLUTION";
+=======
+select d1.name || " and " || d2.name || " are " || s.size || " siblings" FROM parents as p1, parents as p2, dogs as d1, dogs as d2, sizes as s WHERE p1.parent = p2.parent AND p1.child < p2.child AND p1.child = d1.name AND p2.child = d2.name AND d1.height > s.min AND d1.height <= s.max AND d2.height > s.min AND d2.height <= s.max;
+>>>>>>> 0bd41e9f5ba00a463fca162841437259494e0da1
 
 
 -- Ways to stack 4 dogs to a height of at least 170, ordered by total height
 create table stacks as
+<<<<<<< HEAD
 select "REPLACE THIS LINE WITH YOUR SOLUTION";
 
 
@@ -54,5 +67,37 @@ select "REPLACE THIS LINE WITH YOUR SOLUTION";
 -- All non-parent relations ordered by height difference
 create table non_parents as
 select "REPLACE THIS LINE WITH YOUR SOLUTION";
+=======
+with
+  dog_stack(fullname, num, prev_ht, total_ht) as (
+    select name, 1, height, height from dogs union
+    select fullname || ", " || name, num + 1, height, total_ht + height FROM dog_stack, dogs WHERE prev_ht < height AND num < 4
+  )
+select fullname, total_ht FROM dog_stack WHERE total_ht > 170 ORDER BY total_ht; 
+
+
+create table tallest as
+with
+  dog_info(tenth_height, ht, name) as (
+    select height / 10, height, name FROM dogs
+  ),
+  height_info(max_ht, cnt) as (
+    select MAX(ht), COUNT(*) FROM dog_info GROUP BY tenth_height
+  )
+select d.height, d.name FROM dogs as d, height_info as h WHERE d.height = h.max_ht AND h.cnt > 1;
+
+-- All non-parent relations ordered by height difference
+create table non_parents as
+with 
+  ancestor(one, two, generation) as (
+    select parent, child, 1  FROM parents union
+    select a.one, p.child, a.generation + 1 FROM ancestor as a, parents as p WHERE a.two = p.parent AND a.generation > 0
+  ),
+  no_parent(member1, member2, diff) as (
+    select a.one, a.two, d1.height - d2.height FROM ancestor as a, dogs as d1, dogs as d2 WHERE a.generation > 1 AND a.one = d1.name AND a.two = d2.name union
+    select a.two, a.one, d2.height - d1.height FROM ancestor as a, dogs as d1, dogs as d2 WHERE a.generation > 1 AND a.one = d1.name AND a.two = d2.name
+  )
+select member1, member2 FROM no_parent ORDER BY diff; 
+>>>>>>> 0bd41e9f5ba00a463fca162841437259494e0da1
 
 
