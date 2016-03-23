@@ -200,7 +200,12 @@ class ThrowerAnt(Ant):
         """
         # BEGIN Problem 3B
         "*** REPLACE THIS LINE ***"
-        return random_or_none(self.place.bees)
+        throw_place = self.place
+        while throw_place != hive:
+            if not throw_place.bees:
+                throw_place = throw_place.entrance
+            else:
+                return random_or_none(throw_place.bees)
         # END Problem 3B
 
     def throw_at(self, target):
