@@ -191,7 +191,8 @@ class ThrowerAnt(Ant):
     implemented = True
     damage = 1
     food_cost = 4
-
+    min_range = 0
+    max_range = sys.maxsize
     def nearest_bee(self, hive):
         """Return the nearest Bee in a Place that is not the Hive, connected to
         the ThrowerAnt's Place by following entrances.
@@ -200,12 +201,15 @@ class ThrowerAnt(Ant):
         """
         # BEGIN Problem 3B
         "*** REPLACE THIS LINE ***"
-        throw_place = self.place
+        ind, throw_place = 0, self.place
         while throw_place != hive:
-            if not throw_place.bees:
-                throw_place = throw_place.entrance
+            if ind < self.min_range or not throw_place.bees:
+                ind, throw_place = ind + 1, throw_place.entrance
+            elif ind > self.max_range:
+                break
             else:
                 return random_or_none(throw_place.bees)
+        return None
         # END Problem 3B
 
     def throw_at(self, target):
@@ -262,20 +266,22 @@ class FireAnt(Ant):
 class LongThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at least 5 places away."""
 
+    food_cost = 2
     name = 'Long'
     # BEGIN Problem 4B
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
+    min_range = 5
     # END Problem 4B
 
 
 class ShortThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at most 3 places away."""
 
+    food_cost = 2
     name = 'Short'
     # BEGIN Problem 4B
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
+    max_range = 3
     # END Problem 4B
 
 
