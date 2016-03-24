@@ -183,6 +183,19 @@ class HarvesterAnt(Ant):
         colony.food += 1
         # END Problem 1
 
+class WallAnt(Ant):
+    """WallAnt does nothing each turn, but it is useful as it has a huge 
+       amount of armor, so it can stop bees from approaching
+    """
+
+    name = 'Wall'
+    implemented = True
+    food_cost = 4
+    def __init__(self, armor=4):
+        Insect.__init__(self, armor)
+
+    def action(self, colony):
+        pass
 
 class ThrowerAnt(Ant):
     """ThrowerAnt throws a leaf each turn at the nearest Bee in its range."""
