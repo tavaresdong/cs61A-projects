@@ -67,22 +67,29 @@ class Place(object):
 
         A Bee is just removed from the list of Bees.
         """
+        queen = False
         if insect.is_ant:
             # Phase 4: Special Handling for BodyguardAnt and QueenAnt
             if self.ant is insect:
                 if hasattr(self.ant, 'container') and self.ant.container:
                     self.ant = self.ant.ant
+                elif self.ant.name == 'Queen' and not self.ant.imposter:
+                    queen = True
                 else:
                     self.ant = None
             else:
                 if hasattr(self.ant, 'container') and self.ant.container and self.ant.ant is insect:
-                    self.ant.ant = None
+                    if self.ant.ant.name == 'Queen' and not self.ant.ant.imposter:
+                        queen = True
+                    else:
+                        self.ant.ant = None
                 else:
                     assert False, '{0} is not in {1}'.format(insect, self)
         else:
             self.bees.remove(insect)
 
-        insect.place = None
+        if not queen:
+            insect.place = None
 
     def __str__(self):
         return self.name
@@ -424,19 +431,33 @@ class TankAnt(BodyguardAnt):
             self.ant.action(colony)
         # END Problem 8
 
-class QueenAnt(Ant):  # You should change this line
-    """The Queen of the colony.  The game is over if a bee enters her place."""
+class QueenAnt(ScubaThrower):
+    """The Queen of the colony.  The game is over if a bee enters her place.
+    """
 
     name = 'Queen'
+    food_cost = 6
     # BEGIN Problem 9
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
+    queen_count = 0
     # END Problem 9
 
     def __init__(self):
         # BEGIN Problem 9
-        "*** REPLACE THIS LINE ***"
+        self.doubled = set()
+        self.armor = 1
+        if QueenAnt.queen_count == 0:
+            self.imposter = False
+            QueenAnt.queen_count += 1
+        else:
+            self.imposter = True
+            QueenAnt.queen_count += 1
         # END Problem 9
+
+    def _double_damage(self, ant):
+        if ant not in self.doubled:
+            ant.damage = ant.damage * 2
+            self.doubled.add(ant)
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
@@ -445,7 +466,19 @@ class QueenAnt(Ant):  # You should change this line
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         # BEGIN Problem 9
-        "*** REPLACE THIS LINE ***"
+        if self.imposter:
+            self.reduce_armor(self.armor)
+        else:
+            self.throw_at(self.nearest_bee(colony.hive))
+            cur_place = self.place.exit
+            while cur_place is not None:
+                if cur_place.ant is None:
+                    pass
+                else:
+                    self._double_damage(cur_place.ant)
+                    if cur_place.ant.container and cur_place.ant.ant is not None:
+                        self._double_damage(cur_place.ant.ant)
+                cur_place = cur_place.exit
         # END Problem 9
 
     def reduce_armor(self, amount):
@@ -453,7 +486,11 @@ class QueenAnt(Ant):  # You should change this line
         remaining, signal the end of the game.
         """
         # BEGIN Problem 9
-        "*** REPLACE THIS LINE ***"
+        self.armor -= amount
+        if not self.imposter and self.armor <= 0:
+            bees_win()
+        else:
+            self.place.remove_insect(self)
         # END Problem 9
 
 class AntRemover(Ant):
