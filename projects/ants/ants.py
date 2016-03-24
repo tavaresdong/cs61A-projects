@@ -343,24 +343,31 @@ class HungryAnt(Ant):
     While digesting, the HungryAnt can't eat another Bee.
     """
     name = 'Hungry'
+    time_to_digest = 3
+    food_cost = 4
     # BEGIN Problem 6B
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True 
     # END Problem 6B
 
     def __init__(self):
         # BEGIN Problem 6B
-        "*** REPLACE THIS LINE ***"
+        self.digesting = 0
+        self.armor = 1
         # END Problem 6B
 
     def eat_bee(self, bee):
         # BEGIN Problem 6B
-        "*** REPLACE THIS LINE ***"
+        if bee is not None:
+            bee.reduce_armor(bee.armor)
+            self.digesting = self.time_to_digest
         # END Problem 6B
 
     def action(self, colony):
         # BEGIN Problem 6B
-        "*** REPLACE THIS LINE ***"
+        if self.digesting > 0:
+            self.digesting -= 1
+        else:
+            self.eat_bee(random_or_none(self.place.bees))
         # END Problem 6B
 
 
