@@ -234,6 +234,16 @@ class ThrowerAnt(Ant):
         """Throw a leaf at the nearest Bee in range."""
         self.throw_at(self.nearest_bee(colony.hive))
 
+class ScubaThrower(ThrowerAnt):
+    """ScubaThrower can be placed in water, and will not lose armor in water
+    """
+    name = 'Scuba'
+    implemented = True
+    food_cost = 5
+    watersafe = True
+
+
+
 def random_or_none(s):
     """Return a random element of sequence s, or return None if s is empty."""
     if s:
