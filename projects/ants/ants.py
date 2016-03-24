@@ -411,14 +411,17 @@ class TankAnt(BodyguardAnt):
     """TankAnt provides both offensive and defensive capabilities."""
     name = 'Tank'
     damage = 1
+    food_cost = 6
     # BEGIN Problem 8
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
     # END Problem 8
 
     def action(self, colony):
         # BEGIN Problem 8
-        "*** REPLACE THIS LINE ***"
+        for bee in self.place.bees[:]:
+            bee.reduce_armor(self.damage)       
+        if self.ant:
+            self.ant.action(colony)
         # END Problem 8
 
 class QueenAnt(Ant):  # You should change this line
