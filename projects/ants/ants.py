@@ -165,11 +165,14 @@ class Bee(Insect):
         elif self.armor > 0 and self.place.exit is not None:
             self.move_to(self.place.exit)
 
+    default_action = action
+
 
 class Ant(Insect):
     """An Ant occupies a place and does work for the colony."""
 
     is_ant = True
+    name = ''
     implemented = False  # Only implemented Ant classes should be instantiated
     food_cost = 0
     blocks_path = True
@@ -513,7 +516,11 @@ def make_slow(action):
     action -- An action method of some Bee
     """
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
+    def slowed_action(bee, colony):
+        if colony.time % 2 == 0:
+            Bee.action(bee, colony)
+
+    return slowed_action
     # END Problem EC
 
 def make_stun(action):
@@ -522,13 +529,27 @@ def make_stun(action):
     action -- An action method of some Bee
     """
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
+    def stunned_action(bee, colony):
+        pass
+
+    return stunned_action
     # END Problem EC
+
 
 def apply_effect(effect, bee, duration):
     """Apply a status effect to a Bee that lasts for duration turns."""
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
+    changed_action = effect(bee.action)
+    prev_action = bee.action
+
+    def duration_effect(colony):
+        nonlocal duration
+        changed_action(bee, colony)
+        duration -= 1
+        if duration == 0:
+            bee.action = prev_action
+
+    bee.action = duration_effect
     # END Problem EC
 
 
@@ -536,9 +557,9 @@ class SlowThrower(ThrowerAnt):
     """ThrowerAnt that causes Slow on Bees."""
 
     name = 'Slow'
+    food_cost = 4
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True 
     # END Problem EC
 
     def throw_at(self, target):
@@ -550,9 +571,9 @@ class StunThrower(ThrowerAnt):
     """ThrowerAnt that causes Stun on Bees."""
 
     name = 'Stun'
+    food_cost = 6
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = True
     # END Problem EC
 
     def throw_at(self, target):
