@@ -114,7 +114,7 @@ def scheme_read(src):
         return val
     elif val == "'":
         # BEGIN Question 1
-        "*** REPLACE THIS LINE ***"
+        return Pair('quote', Pair(scheme_read(src), nil))
         # END Question 1
     elif val == "(":
         return read_tail(src)
