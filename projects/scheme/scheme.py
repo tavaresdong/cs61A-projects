@@ -168,10 +168,12 @@ def do_define_form(expressions, env):
     """Evaluate a define form."""
     check_form(expressions, 2)
     target = expressions.first
+    value_expr  = expressions.second.first
     if scheme_symbolp(target):
         check_form(expressions, 2, 2)
         # BEGIN Question 5A
-        "*** REPLACE THIS LINE ***"
+        env.define(target, scheme_eval(value_expr, env))
+        return target
         # END Question 5A
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN Question 9A
