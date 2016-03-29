@@ -149,7 +149,13 @@ def read_tail(src):
             return nil
         elif src.current() == ".":
             # BEGIN Question 2
-            "*** REPLACE THIS LINE ***"
+            src.pop()
+            after = scheme_read(src)
+            if src.current() != ')':
+                raise SyntaxError("expected one element after .")
+            else:
+                src.pop()
+                return after
             # END Question 2
         else:
             first = scheme_read(src)
