@@ -187,7 +187,8 @@ def do_quote_form(expressions, env):
     """Evaluate a quote form."""
     check_form(expressions, 1, 1)
     # BEGIN Question 6B
-    "*** REPLACE THIS LINE ***"
+    value_expr = expressions.first
+    return value_expr
     # END Question 6B
 
 def do_begin_form(expressions, env):
