@@ -66,7 +66,12 @@ def apply_primitive(procedure, args_scheme_list, env):
         args.append(args_scheme_list.first)
         args_scheme_list = args_scheme_list.second
     # BEGIN Question 4
-    "*** REPLACE THIS LINE ***"
+    if procedure.use_env:
+        args.append(env)
+    try:
+        return procedure.fn(*args)
+    except TypeError:
+        raise SchemeError
     # END Question 4
 
 def eval_all(expressions, env):
