@@ -89,7 +89,7 @@ def eval_all(expressions, env):
 def make_call_frame(procedure, args, env):
     """Make a frame that binds the formal parameters of PROCEDURE to ARGS."""
     # BEGIN Question 12
-    "*** REPLACE THIS LINE ***"
+    return procedure.env.make_child_frame(procedure.formals, args)
     # END Question 12
 
 ################
