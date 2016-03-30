@@ -307,7 +307,20 @@ def check_formals(formals):
     >>> check_formals(read_line("(a b c)"))
     """
     # BEGIN Question 11B
-    "*** REPLACE THIS LINE ***"
+    def check_formals_helper(formals, used):
+        if formals == nil:
+            return True
+        elif not (isinstance(formals.second, Pair) or formals.second == nil):
+            raise SchemeError("Not a well-formed list of parameters")
+
+        if not scheme_symbolp(formals.first):
+            raise SchemeError("{0} is Not a valid symbol in parameters".format(formals.first))
+        elif formals.first in used:
+            raise SchemeError("{0} is already in previous parameters list".format(formals.first))
+        used.add(formals.first)
+        return check_formals_helper(formals.second, used)
+            
+    check_formals_helper(formals, set())
     # END Question 11B
 
 #################
