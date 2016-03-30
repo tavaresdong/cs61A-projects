@@ -38,6 +38,18 @@ class Pair:
         self.first = first
         self.second = second
 
+    def __iter__(self):
+        self.cur = self
+        return self
+
+    def __next__(self):
+        if self.cur == nil:
+            raise StopIteration
+        else:
+            val = self.cur.first
+            self.cur = self.cur.second
+            return val
+
     def __repr__(self):
         return "Pair({0}, {1})".format(repr(self.first), repr(self.second))
 

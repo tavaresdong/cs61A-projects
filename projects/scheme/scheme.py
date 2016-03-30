@@ -135,7 +135,11 @@ class Frame:
         """
         child = Frame(self) # Create a new child with self as the parent
         # BEGIN Question 10
-        "*** REPLACE THIS LINE ***"
+        if len(formals) != len(vals):
+            raise SchemeError("Formal parameter and Arguments sizes don't match")
+        if not (formals == nil and vals == nil):
+            for para, argu in zip(formals, vals):
+                child.bindings[para] = argu
         # END Question 10
         return child
 
