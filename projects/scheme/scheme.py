@@ -78,7 +78,12 @@ def eval_all(expressions, env):
     """Evaluate a Scheme list of EXPRESSIONS & return the value of the last."""
     # BEGIN Question 7
     "*** REPLACE THIS LINE ***"
-    return scheme_eval(expressions.first, env)
+    if expressions == nil:
+        return okay
+    val = scheme_eval(expressions.first, env)
+    if expressions.second == nil:
+        return val
+    return eval_all(expressions.second, env)
     # END Question 7
 
 def make_call_frame(procedure, args, env):
