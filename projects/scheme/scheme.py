@@ -182,7 +182,10 @@ def do_define_form(expressions, env):
         # END Question 5A
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN Question 9A
-        "*** REPLACE THIS LINE ***"
+        formals, body = target.second, expressions.second
+        lambdaproc = LambdaProcedure(formals, body, env)
+        env.define(target.first, lambdaproc)
+        return target.first
         # END Question 9A
     else:
         bad = target.first if isinstance(target, Pair) else target
