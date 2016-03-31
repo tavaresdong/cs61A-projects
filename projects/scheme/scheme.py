@@ -273,9 +273,14 @@ def do_cond_form(expressions, env):
             test = True
         else:
             test = scheme_eval(clause.first, env)
+
+        # We don't need to declare test to use it in
+        # current environment!
         if scheme_true(test):
             # BEGIN Question 15A
-            "*** REPLACE THIS LINE ***"
+            if clause.second == nil:
+                return test
+            return eval_all(clause.second, env)
             # END Question 15A
         expressions = expressions.second
         i += 1
