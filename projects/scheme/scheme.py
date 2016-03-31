@@ -89,6 +89,8 @@ def eval_all(expressions, env):
 def make_call_frame(procedure, args, env):
     """Make a frame that binds the formal parameters of PROCEDURE to ARGS."""
     # BEGIN Question 12
+    if isinstance(procedure, MuProcedure):
+        return env.make_child_frame(procedure.formals, args)
     return procedure.env.make_child_frame(procedure.formals, args)
     # END Question 12
 
@@ -398,9 +400,10 @@ def do_mu_form(expressions, env):
     """Evaluate a mu form."""
     check_form(expressions, 2)
     formals = expressions.first
+    body = expressions.second
     check_formals(formals)
     # BEGIN Question 17
-    "*** REPLACE THIS LINE ***"
+    return MuProcedure(formals, body)
     # END Question 17
 
 SPECIAL_FORMS["mu"] = do_mu_form
