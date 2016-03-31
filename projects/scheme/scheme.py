@@ -297,7 +297,20 @@ def make_let_frame(bindings, env):
     if not scheme_listp(bindings):
         raise SchemeError("bad bindings list in let form")
     # BEGIN Question 16
-    "*** REPLACE THIS LINE ***"
+    formals = Pair(nil, nil)
+    args = Pair(nil, nil)
+    f, a = formals, args
+    while bindings is not nil:
+        clause = bindings.first
+        check_form(clause, 2, 2)
+        if not scheme_symbolp(clause.first):
+            raise SchemeError("{0} is Not a symbol for let expression".format(clause.first))
+        f.second = Pair(clause.first, nil)
+        f = f.second
+        a.second = Pair(scheme_eval(clause.second.first, env), nil)
+        a = a.second
+        bindings = bindings.second
+    return env.make_child_frame(formals.second, args.second)
     # END Question 16
 
 SPECIAL_FORMS = {
